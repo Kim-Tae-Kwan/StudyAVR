@@ -73,7 +73,5 @@ int main(void)
 		sprintf(str3,"%c",temp);
 		Lcd_STR(str3);
 		
-		
-		
     }
 }
