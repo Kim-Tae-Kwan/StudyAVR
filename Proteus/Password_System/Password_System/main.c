@@ -27,6 +27,8 @@ Byte Password_Change[]="Change Password:";
 
 Byte IsPassword_false[]="Password False!!";
 Byte IsPassword_true[]="Open The Door";
+
+Byte Chaged_Password[]="Chaged Password!";
 //---------------------------------------
 
 
@@ -79,6 +81,7 @@ void Password_Check()
 	if(strcmp(Password,Buf)==0)
 	{
 		Lcd_Display(Password_In,IsPassword_true);
+		Motor();
 	}
 	else
 	{
@@ -90,6 +93,11 @@ void Password_Check()
 
 void Password_Changing()
 {
+	for(int i=0;i<16;i++)
+	{
+		Password[i]='\0';
+	}
+	strcpy(Password,Buf);
 	
 }
 
@@ -126,6 +134,15 @@ void Buf_Empty()
 	Buf_idx=0;
 }
 
+void Motor()
+{
+	PORTC = 0x01;
+	_delay_ms(1000);
+	PORTC = 0x80;
+	_delay_ms(1000);
+	PORTC = 0X00;
+}
+
 
 
 int main(void)
@@ -137,6 +154,8 @@ int main(void)
     
 	DDRD = 0xF8;
 	PORTD = 0x00;
+	
+	DDRC = 0x81;
 	
     LcdInit_4bit(); //Lcd 초기화
 	
@@ -165,7 +184,12 @@ int main(void)
 						if(temp=='x') break;
 						else if(temp=='*') //비밀번호 입력 끝.
 						{
-							Password_Check();
+							Password_Changing();
+							Mode=None;
+							Buf_Empty();
+							Lcd_Display(Chaged_Password,NULL);
+							_delay_ms(1000);
+							Lcd_Display(Title,Title2);
 						}
 						else
 						{
