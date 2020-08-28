@@ -97,7 +97,6 @@ int main(void)
 				}
 				Buf[Buf_idx++]= temp;
 			}
-			putstr("abcde");
 		}
 		else
 		{
