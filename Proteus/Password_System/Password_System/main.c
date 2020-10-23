@@ -128,7 +128,7 @@ int main(void)
 unsigned char KeyPad()
 {
 	PORTF = 0xFE;
-	if((Keypadin & 0xF0) == 0xE0) { while(Keypadin == 0xEE); return '1'; }
+	if((Keypadin & 0xF0) == 0xE0) { while(Keypadin == 0xEE); return '1';}
 	if((Keypadin & 0xF0) == 0xD0) { while(Keypadin == 0xDE); return '4';}
 	if((Keypadin & 0xF0) == 0xB0) { while(Keypadin == 0xBE); return '7';}
 	if((Keypadin & 0xF0) == 0x70) { while(Keypadin == 0x7E); return '*';}
@@ -170,6 +170,8 @@ void Password_Check()
 	else
 	{
 		Lcd_Display(Password_In,IsPassword_false);
+		_delay_ms(1000);
+		Lcd_Display(Password_In,Title2);
 	}
 	
 	Buf_Empty();
@@ -240,6 +242,7 @@ void Motor()
 	PORTC = 0x80;
 	_delay_ms(1000);
 	PORTC = 0X00;
+	Lcd_Display(Title,Title2);
 }
 
 void putch(Byte data)
